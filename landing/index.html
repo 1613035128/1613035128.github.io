@@ -391,14 +391,29 @@
 
         isTransitioning = true;
 
-        // Get the actual DOM elements to use
-        var currentBgIndex = currentIndex % bgImages.length;
-        var nextBgIndex = index % bgImages.length;
+        // Find current active element
+        var currentBg = null;
+        var nextBg = null;
         
-        var currentBg = bgImages[currentBgIndex];
-        var nextBg = bgImages[nextBgIndex];
+        for (var i = 0; i < bgImages.length; i++) {
+          if (bgImages[i].classList.contains('active')) {
+            currentBg = bgImages[i];
+          }
+        }
+        
+        // Find an inactive element for the next slide
+        for (var i = 0; i < bgImages.length; i++) {
+          if (!bgImages[i].classList.contains('active')) {
+            nextBg = bgImages[i];
+            break;
+          }
+        }
+        
+        // Fallback if something went wrong
+        if (!currentBg) currentBg = bgImages[0];
+        if (!nextBg) nextBg = bgImages[1] || bgImages[0];
 
-        // Set next background image
+        // Set next background image before showing
         if (backgrounds[index]) {
           nextBg.style.backgroundImage = 'url(' + backgrounds[index].image + ')';
         }
