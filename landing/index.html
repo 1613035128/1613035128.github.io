@@ -118,18 +118,26 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: #fff;
+      background-color: transparent;
       background-size: contain;
       background-position: center;
       background-repeat: no-repeat;
       opacity: 0;
-      transition: opacity 800ms ease-in-out;
+      transition: opacity 1000ms ease-in-out;
       z-index: 1;
     }
     
     .bg-image.active {
       opacity: 1;
       z-index: 2;
+    }
+    
+    /* 背景图设置 - 可以修改这里的图片URL */
+    .background-slider {
+      background-image: url('/images/bg-default.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
     
     .landing-content {
@@ -376,7 +384,7 @@
         }
       }
 
-      function goToSlide(index) {
+      function goToSlide(index, isManual) {
         if (isTransitioning || index === currentIndex || backgrounds.length === 0) {
           return;
         }
@@ -411,23 +419,28 @@
         // Reset transition flag
         setTimeout(function() {
           isTransitioning = false;
-        }, 800);
+        }, 1000);
 
-        // Reset autoplay
-        resetAutoPlay();
+        // Reset autoplay only on manual navigation
+        if (isManual) {
+          resetAutoPlay();
+        }
       }
 
-      function nextSlide() {
-        goToSlide(getNextIndex(1));
+      function nextSlide(isManual) {
+        goToSlide(getNextIndex(1), isManual);
       }
 
       function prevSlide() {
-        goToSlide(getNextIndex(-1));
+        goToSlide(getNextIndex(-1), true);
       }
 
       function startAutoPlay() {
         if (backgrounds.length <= 1) return;
-        autoPlayTimer = setInterval(nextSlide, config.autoPlayInterval);
+        stopAutoPlay(); // 确保清除之前的计时器
+        autoPlayTimer = setInterval(function() {
+          nextSlide(false); // false 表示自动播放，不重置计时器
+        }, config.autoPlayInterval);
       }
 
       function stopAutoPlay() {
@@ -455,7 +468,7 @@
           nextBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            nextSlide();
+            nextSlide(true); // true 表示手动操作
           });
         }
 
@@ -464,7 +477,7 @@
           if (e.key === 'ArrowLeft') {
             prevSlide();
           } else if (e.key === 'ArrowRight') {
-            nextSlide();
+            nextSlide(true); // true 表示手动操作
           }
         });
 
