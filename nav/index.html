@@ -13,8 +13,8 @@
 <meta property="og:site_name" content="昴星团">
 <meta property="og:description" content="昴星团           * {       margin: 0;       padding: 0;       box-sizing: border-box;     }          html, body {       width: 100%;       height: 100%;       overflow: hidden;       font-family:">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-03-25T11:09:25.588Z">
-<meta property="article:modified_time" content="2026-03-25T11:09:25.588Z">
+<meta property="article:published_time" content="2026-03-25T11:21:48.177Z">
+<meta property="article:modified_time" content="2026-03-25T11:21:48.177Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -81,7 +81,7 @@
         <section id="main"><article id="page-" class="h-entry article article-type-page" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/nav/index.html" class="article-date">
-  <time class="dt-published" datetime="2026-03-25T11:09:25.588Z" itemprop="datePublished">2026-03-25</time>
+  <time class="dt-published" datetime="2026-03-25T11:21:48.177Z" itemprop="datePublished">2026-03-25</time>
 </a>
     
   </div>
@@ -125,7 +125,6 @@
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 1;
     }
     
     /* 底层背景图 */
@@ -154,18 +153,12 @@
       background-position: center;
       background-repeat: no-repeat;
       opacity: 0;
-      transition: opacity 1200ms ease-in-out;
+      transition: opacity 1500ms ease-in-out;
       z-index: 1;
     }
     
     .bg-image.active {
       opacity: 1;
-      z-index: 1;
-    }
-    
-    .bg-image.fade-out {
-      opacity: 0;
-      z-index: 0;
     }
     
     .nav-content {
@@ -430,47 +423,23 @@
         for (var i = 0; i < bgImages.length; i++) {
           if (bgImages[i].classList.contains('active')) {
             currentBg = bgImages[i];
-          }
-        }
-        
-        // Find an inactive element for the next slide
-        for (var i = 0; i < bgImages.length; i++) {
-          if (!bgImages[i].classList.contains('active')) {
+          } else if (!nextBg) {
             nextBg = bgImages[i];
-            break;
           }
         }
         
-        // Fallback if something went wrong
+        // Fallback
         if (!currentBg) currentBg = bgImages[0];
         if (!nextBg) nextBg = bgImages[1] || bgImages[0];
 
-        // Set next background image before showing
+        // Set next background image
         if (backgrounds[index]) {
           nextBg.style.backgroundImage = 'url(' + backgrounds[index].image + ')';
         }
 
-        // Smooth transition: fade out current, fade in next
-        // First, make sure next image is below current
-        nextBg.style.zIndex = '0';
-        nextBg.classList.remove('fade-out');
-        
-        // Small delay to ensure z-index is applied
-        setTimeout(function() {
-          // Add active to next (it will fade in)
-          nextBg.classList.add('active');
-          
-          // Fade out current
-          currentBg.classList.remove('active');
-          currentBg.classList.add('fade-out');
-          
-          // After transition, reset z-index
-          setTimeout(function() {
-            currentBg.classList.remove('fade-out');
-            currentBg.style.zIndex = '';
-            nextBg.style.zIndex = '';
-          }, 1200);
-        }, 50);
+        // Pure opacity transition - no z-index changes
+        nextBg.classList.add('active');
+        currentBg.classList.remove('active');
 
         // Update index
         currentIndex = index;
@@ -481,10 +450,15 @@
         // Preload next image
         preloadImage(getNextIndex(1));
 
+        // Clear old image after transition
+        setTimeout(function() {
+          currentBg.style.backgroundImage = '';
+        }, 1500);
+
         // Reset transition flag
         setTimeout(function() {
           isTransitioning = false;
-        }, 1250);
+        }, 1600);
 
         // Reset autoplay only on manual navigation
         if (isManual) {
@@ -502,9 +476,9 @@
 
       function startAutoPlay() {
         if (backgrounds.length <= 1) return;
-        stopAutoPlay(); // 确保清除之前的计时器
+        stopAutoPlay();
         autoPlayTimer = setInterval(function() {
-          nextSlide(false); // false 表示自动播放，不重置计时器
+          nextSlide(false);
         }, config.autoPlayInterval);
       }
 
@@ -533,7 +507,7 @@
           nextBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            nextSlide(true); // true 表示手动操作
+            nextSlide(true);
           });
         }
 
@@ -542,7 +516,7 @@
           if (e.key === 'ArrowLeft') {
             prevSlide();
           } else if (e.key === 'ArrowRight') {
-            nextSlide(true); // true 表示手动操作
+            nextSlide(true);
           }
         });
 
@@ -553,7 +527,7 @@
           navSection.addEventListener('mouseleave', startAutoPlay);
         }
 
-        // Visibility API - pause when tab is hidden
+        // Visibility API
         document.addEventListener('visibilitychange', function() {
           if (document.hidden) {
             stopAutoPlay();
@@ -563,7 +537,7 @@
         });
       }
 
-      // Initialize when DOM is ready
+      // Initialize
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
       } else {
@@ -576,7 +550,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://1613035128.github.io/nav/index.html" data-id="cuidg_fquxyN0XYTQrFRcgFQR" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://1613035128.github.io/nav/index.html" data-id="cuidmjqXNUr8seeFEjVA6S0th" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
