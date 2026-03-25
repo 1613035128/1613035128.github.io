@@ -6,15 +6,15 @@
   
   <title>昴星团</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="昴星团           * {       margin: 0;       padding: 0;       box-sizing: border-box;     }          body {       font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Ne">
+  <meta name="description" content="昴星团           * {       margin: 0;       padding: 0;       box-sizing: border-box;     }          html, body {       width: 100%;       height: 100%;       overflow: hidden;       font-family:">
 <meta property="og:type" content="website">
 <meta property="og:title" content="昴星团">
-<meta property="og:url" content="https://1613035128.github.io/landing/index.html">
+<meta property="og:url" content="https://1613035128.github.io/nav/index.html">
 <meta property="og:site_name" content="昴星团">
-<meta property="og:description" content="昴星团           * {       margin: 0;       padding: 0;       box-sizing: border-box;     }          body {       font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Ne">
+<meta property="og:description" content="昴星团           * {       margin: 0;       padding: 0;       box-sizing: border-box;     }          html, body {       width: 100%;       height: 100%;       overflow: hidden;       font-family:">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-03-25T11:01:39.175Z">
-<meta property="article:modified_time" content="2026-03-25T11:01:39.175Z">
+<meta property="article:published_time" content="2026-03-25T11:09:25.588Z">
+<meta property="article:modified_time" content="2026-03-25T11:09:25.588Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -80,8 +80,8 @@
       <div class="outer">
         <section id="main"><article id="page-" class="h-entry article article-type-page" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/landing/index.html" class="article-date">
-  <time class="dt-published" datetime="2026-03-25T11:01:39.175Z" itemprop="datePublished">2026-03-25</time>
+    <a href="/nav/index.html" class="article-date">
+  <time class="dt-published" datetime="2026-03-25T11:09:25.588Z" itemprop="datePublished">2026-03-25</time>
 </a>
     
   </div>
@@ -91,7 +91,7 @@
     <div class="e-content article-entry" itemprop="articleBody">
       
         <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <title>昴星团</title>
@@ -103,18 +103,20 @@
       box-sizing: border-box;
     }
     
-    body {
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
     
-    .landing-section {
+    .nav-section {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      z-index: 9999;
     }
     
     .background-slider {
@@ -166,7 +168,7 @@
       z-index: 0;
     }
     
-    .landing-content {
+    .nav-content {
       position: absolute;
       top: 50%;
       left: 50%;
@@ -177,7 +179,7 @@
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
     }
     
-    .landing-title {
+    .nav-title {
       font-size: 4rem;
       font-weight: 700;
       margin: 0 0 1rem 0;
@@ -185,7 +187,7 @@
       animation: fadeInUp 1s ease-out;
     }
     
-    .landing-subtitle {
+    .nav-subtitle {
       font-size: 1.2rem;
       font-weight: 300;
       margin: 0 0 2rem 0;
@@ -292,12 +294,12 @@
     }
     
     @media (max-width: 768px) {
-      .landing-title {
+      .nav-title {
         font-size: 2.5rem;
         letter-spacing: 0.3rem;
       }
       
-      .landing-subtitle {
+      .nav-subtitle {
         font-size: 1rem;
         padding: 0 2rem;
       }
@@ -314,15 +316,15 @@
   </style>
 </head>
 <body>
-  <div id="landing-section" class="landing-section">
+  <div id="nav-section" class="nav-section">
     <div class="background-slider">
       <div class="bg-image active" data-index="0"></div>
       <div class="bg-image" data-index="1"></div>
       <div class="bg-image" data-index="2"></div>
     </div>
-    <div class="landing-content">
-      <h1 class="landing-title">昴星团</h1>
-      <p class="landing-subtitle" id="landing-subtitle">Miku</p>
+    <div class="nav-content">
+      <h1 class="nav-title">昴星团</h1>
+      <p class="nav-subtitle" id="nav-subtitle">Miku</p>
       <a href="/archives" class="enter-button">Button</a>
     </div>
     <div class="nav-zones">
@@ -357,7 +359,7 @@
       var isTransitioning = false;
 
       var bgImages = document.querySelectorAll('.bg-image');
-      var subtitleEl = document.getElementById('landing-subtitle');
+      var subtitleEl = document.getElementById('nav-subtitle');
       var prevBtn = document.getElementById('nav-prev');
       var nextBtn = document.getElementById('nav-next');
 
@@ -545,10 +547,10 @@
         });
 
         // Pause autoplay on hover
-        var landingSection = document.getElementById('landing-section');
-        if (landingSection) {
-          landingSection.addEventListener('mouseenter', stopAutoPlay);
-          landingSection.addEventListener('mouseleave', startAutoPlay);
+        var navSection = document.getElementById('nav-section');
+        if (navSection) {
+          navSection.addEventListener('mouseenter', stopAutoPlay);
+          navSection.addEventListener('mouseleave', startAutoPlay);
         }
 
         // Visibility API - pause when tab is hidden
@@ -563,7 +565,7 @@
 
       // Initialize when DOM is ready
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', init);
       } else {
         init();
       }
@@ -574,7 +576,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://1613035128.github.io/landing/index.html" data-id="cuidEGvVu1OvyLFRMJtDUq2Vs" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://1613035128.github.io/nav/index.html" data-id="cuidg_fquxyN0XYTQrFRcgFQR" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
