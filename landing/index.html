@@ -138,13 +138,18 @@
       background-position: center;
       background-repeat: no-repeat;
       opacity: 0;
-      transition: opacity 1000ms ease-in-out;
+      transition: opacity 1200ms ease-in-out;
       z-index: 1;
     }
     
     .bg-image.active {
       opacity: 1;
-      z-index: 2;
+      z-index: 1;
+    }
+    
+    .bg-image.fade-out {
+      opacity: 0;
+      z-index: 0;
     }
     
     .landing-content {
@@ -425,9 +430,27 @@
           nextBg.style.backgroundImage = 'url(' + backgrounds[index].image + ')';
         }
 
-        // Switch active class
-        currentBg.classList.remove('active');
-        nextBg.classList.add('active');
+        // Smooth transition: fade out current, fade in next
+        // First, make sure next image is below current
+        nextBg.style.zIndex = '0';
+        nextBg.classList.remove('fade-out');
+        
+        // Small delay to ensure z-index is applied
+        setTimeout(function() {
+          // Add active to next (it will fade in)
+          nextBg.classList.add('active');
+          
+          // Fade out current
+          currentBg.classList.remove('active');
+          currentBg.classList.add('fade-out');
+          
+          // After transition, reset z-index
+          setTimeout(function() {
+            currentBg.classList.remove('fade-out');
+            currentBg.style.zIndex = '';
+            nextBg.style.zIndex = '';
+          }, 1200);
+        }, 50);
 
         // Update index
         currentIndex = index;
@@ -441,7 +464,7 @@
         // Reset transition flag
         setTimeout(function() {
           isTransitioning = false;
-        }, 1000);
+        }, 1250);
 
         // Reset autoplay only on manual navigation
         if (isManual) {
