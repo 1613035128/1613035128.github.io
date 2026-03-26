@@ -398,6 +398,19 @@
           nextBg.style.backgroundImage = 'url(' + backgrounds[index].image + ')';
         }
 
+        // Pre-position nextBg based on direction (without animation)
+        nextBg.classList.remove('active');
+        if (direction === 'next') {
+          // Next image starts from right
+          nextBg.style.transform = 'translateX(100%)';
+        } else {
+          // Prev image starts from left
+          nextBg.style.transform = 'translateX(-100%)';
+        }
+
+        // Force reflow to apply the pre-position instantly
+        void nextBg.offsetWidth;
+
         // Apply slide animations based on direction
         if (direction === 'next') {
           // Next: current slides left, next comes from right
