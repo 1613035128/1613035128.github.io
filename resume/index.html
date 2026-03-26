@@ -13,8 +13,8 @@
 <meta property="og:site_name" content="昴星团">
 <meta property="og:description" content="个人简历 | Resume           &#x2F;* &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 强制重置所有外部样式 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; *&#x2F;     html, body, body &gt; *, body &gt; * &gt; *, body &gt; * &gt; * &gt; * {       margin: 0 !important;       padding: 0 !important;       backgro">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-03-26T11:15:43.321Z">
-<meta property="article:modified_time" content="2026-03-26T11:15:43.321Z">
+<meta property="article:published_time" content="2026-03-26T11:31:41.495Z">
+<meta property="article:modified_time" content="2026-03-26T11:31:41.495Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -83,7 +83,7 @@
         <section id="main"><article id="page-" class="h-entry article article-type-page" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
     <a href="/resume/index.html" class="article-date">
-  <time class="dt-published" datetime="2026-03-26T11:15:43.321Z" itemprop="datePublished">2026-03-26</time>
+  <time class="dt-published" datetime="2026-03-26T11:31:41.495Z" itemprop="datePublished">2026-03-26</time>
 </a>
     
   </div>
@@ -144,14 +144,15 @@
     
     /* ========== 简历专用样式 ========== */
     .resume-page {
-      background: #0a0a0f !important;
+      background: transparent !important;
       min-height: 100vh !important;
       padding: 40px 20px !important;
       position: relative !important;
+      z-index: 1 !important;
     }
     
-    /* 动态背景层 */
-    .resume-page::before {
+    /* 动态背景层 - 放在body上确保全屏连续 */
+    body::before {
       content: '' !important;
       position: fixed !important;
       top: 0 !important;
@@ -164,11 +165,11 @@
         radial-gradient(ellipse at 50% 50%, rgba(100, 149, 237, 0.05) 0%, transparent 70%),
         #0a0a0f !important;
       pointer-events: none !important;
-      z-index: 0 !important;
+      z-index: -1 !important;
     }
     
     /* 网格背景 */
-    .resume-page::after {
+    body::after {
       content: '' !important;
       position: fixed !important;
       top: 0 !important;
@@ -180,7 +181,7 @@
         linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px) !important;
       background-size: 50px 50px !important;
       pointer-events: none !important;
-      z-index: 0 !important;
+      z-index: -1 !important;
     }
     
     .resume-container {
@@ -389,19 +390,22 @@
     .skills-container {
       display: flex !important;
       flex-wrap: wrap !important;
-      gap: 8px !important;
+      gap: 6px !important;
+      width: 100% !important;
     }
     
     .skill-tag {
-      padding: 6px 12px !important;
+      padding: 5px 10px !important;
       background: rgba(102, 126, 234, 0.1) !important;
       border: 1px solid rgba(102, 126, 234, 0.3) !important;
-      border-radius: 8px !important;
-      font-size: 0.8rem !important;
+      border-radius: 6px !important;
+      font-size: 0.75rem !important;
       color: #a8b2d1 !important;
       transition: all 0.3s ease !important;
       cursor: default !important;
       white-space: nowrap !important;
+      flex-shrink: 0 !important;
+      margin-bottom: 2px !important;
     }
     
     .skill-tag:hover {
@@ -746,7 +750,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://1613035128.github.io/resume/index.html" data-id="cuid8USjbS8WVkUXybl09uHFF" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://1613035128.github.io/resume/index.html" data-id="cuidbHj4WMo0s_RKdCQhtFEjK" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
