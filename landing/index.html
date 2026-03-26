@@ -42,7 +42,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('/images/bg-default.png');
+      background-image: url('/landing/images/bg-default.png');
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
@@ -240,11 +240,12 @@
   </div>
 
   <script>
+    // 配置数据 - 从 landing.yml 读取
     window.backgroundConfig = {
       backgrounds: [
-        { image: '/images/bg-1.jpg', subtitle: 'Miku' },
-        { image: '/images/bg-2.jpg', subtitle: 'Ayase' },
-        { image: '/images/bg-3.jpg', subtitle: 'Rin/Ren' }
+        { image: '/landing/images/bg-1.jpg', subtitle: 'Miku' },
+        { image: '/landing/images/bg-2.jpg', subtitle: 'Ayase' },
+        { image: '/landing/images/bg-3.jpg', subtitle: 'Rin/Ren' }
       ],
       autoPlayInterval: 5000
     };
