@@ -401,39 +401,64 @@
           direction = index > currentIndex ? 'next' : 'prev';
         }
 
-        // Find current active element
+        // Find current active element and an inactive element
         var currentBg = null;
         var nextBg = null;
         
         for (var i = 0; i < bgImages.length; i++) {
           if (bgImages[i].classList.contains('active')) {
             currentBg = bgImages[i];
-          } else if (!nextBg) {
-            nextBg = bgImages[i];
+          }
+        }
+        
+        // Find an element that is NOT active and NOT exiting
+        for (var i = 0; i < bgImages.length; i++) {
+          var bg = bgImages[i];
+          if (bg !== currentBg && !bg.classList.contains('exit-left') && !bg.classList.contains('exit-right')) {
+            nextBg = bg;
+            break;
           }
         }
         
         // Fallback
         if (!currentBg) currentBg = bgImages[0];
+        if (!nextBg) {
+          // If all elements are busy, find the one that's been inactive longest
+          for (var i = 0; i < bgImages.length; i++) {
+            if (bgImages[i] !== currentBg) {
+              nextBg = bgImages[i];
+              break;
+            }
+          }
+        }
         if (!nextBg) nextBg = bgImages[1] || bgImages[0];
+
+        // Reset nextBg position based on direction before showing
+        nextBg.classList.remove('exit-left', 'exit-right', 'active');
+        if (direction === 'next') {
+          nextBg.style.transform = 'translateX(100%)'; // Start from right
+        } else {
+          nextBg.style.transform = 'translateX(-100%)'; // Start from left
+        }
 
         // Set next background image
         if (backgrounds[index]) {
           nextBg.style.backgroundImage = 'url(' + backgrounds[index].image + ')';
         }
 
+        // Force reflow to ensure the position is applied
+        void nextBg.offsetWidth;
+
         // Apply slide animations based on direction
         if (direction === 'next') {
           // Next: current slides left, next comes from right
           currentBg.classList.remove('active');
           currentBg.classList.add('exit-left');
-          nextBg.classList.remove('exit-left', 'exit-right');
           nextBg.classList.add('active');
         } else {
           // Prev: current slides right, next comes from left
           currentBg.classList.remove('active');
           currentBg.classList.add('exit-right');
-          nextBg.classList.remove('exit-left', 'exit-right');
           nextBg.classList.add('active');
         }
 
