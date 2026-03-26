@@ -61,8 +61,12 @@
       background-repeat: no-repeat;
       opacity: 0;
       transform: translateX(100%);
-      transition: transform 600ms ease-in-out, opacity 600ms ease-in-out;
+      /* 默认无transition，通过JS控制 */
       z-index: 2;
+    }
+    
+    .bg-image.transition {
+      transition: transform 600ms ease-in-out, opacity 600ms ease-in-out;
     }
     
     .bg-image.active {
@@ -399,7 +403,8 @@
         }
 
         // Pre-position nextBg based on direction (without animation)
-        nextBg.classList.remove('active');
+        // Remove transition class first
+        nextBg.classList.remove('active', 'transition');
         if (direction === 'next') {
           // Next image starts from right
           nextBg.style.transform = 'translateX(100%)';
@@ -410,6 +415,10 @@
 
         // Force reflow to apply the pre-position instantly
         void nextBg.offsetWidth;
+
+        // Add transition class for animation
+        currentBg.classList.add('transition');
+        nextBg.classList.add('transition');
 
         // Apply slide animations based on direction
         if (direction === 'next') {
