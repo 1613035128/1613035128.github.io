@@ -60,7 +60,7 @@
       background-position: center;
       background-repeat: no-repeat;
       opacity: 0;
-      transition: opacity 1200ms ease-in-out;
+      transition: opacity 1500ms ease-in-out;
       z-index: 2;
     }
     
@@ -331,47 +331,23 @@
         for (var i = 0; i < bgImages.length; i++) {
           if (bgImages[i].classList.contains('active')) {
             currentBg = bgImages[i];
-          }
-        }
-        
-        // Find an inactive element for the next slide
-        for (var i = 0; i < bgImages.length; i++) {
-          if (!bgImages[i].classList.contains('active')) {
+          } else if (!nextBg) {
             nextBg = bgImages[i];
-            break;
           }
         }
         
-        // Fallback if something went wrong
+        // Fallback
         if (!currentBg) currentBg = bgImages[0];
         if (!nextBg) nextBg = bgImages[1] || bgImages[0];
 
-        // Set next background image before showing
+        // Set next background image
         if (backgrounds[index]) {
           nextBg.style.backgroundImage = 'url(' + backgrounds[index].image + ')';
         }
 
-        // Smooth transition: fade out current, fade in next
-        // First, make sure next image is below current
-        nextBg.style.zIndex = '0';
-        nextBg.classList.remove('fade-out');
-        
-        // Small delay to ensure z-index is applied
-        setTimeout(function() {
-          // Add active to next (it will fade in)
-          nextBg.classList.add('active');
-          
-          // Fade out current
-          currentBg.classList.remove('active');
-          currentBg.classList.add('fade-out');
-          
-          // After transition, reset z-index
-          setTimeout(function() {
-            currentBg.classList.remove('fade-out');
-            currentBg.style.zIndex = '';
-            nextBg.style.zIndex = '';
-          }, 1200);
-        }, 50);
+        // Pure opacity transition - no z-index changes
+        nextBg.classList.add('active');
+        currentBg.classList.remove('active');
 
         // Update index
         currentIndex = index;
@@ -382,10 +358,15 @@
         // Preload next image
         preloadImage(getNextIndex(1));
 
+        // Clear old image after transition
+        setTimeout(function() {
+          currentBg.style.backgroundImage = '';
+        }, 1500);
+
         // Reset transition flag
         setTimeout(function() {
           isTransitioning = false;
-        }, 1250);
+        }, 1600);
 
         // Reset autoplay only on manual navigation
         if (isManual) {
@@ -403,9 +384,9 @@
 
       function startAutoPlay() {
         if (backgrounds.length <= 1) return;
-        stopAutoPlay(); // 确保清除之前的计时器
+        stopAutoPlay();
         autoPlayTimer = setInterval(function() {
-          nextSlide(false); // false 表示自动播放，不重置计时器
+          nextSlide(false);
         }, config.autoPlayInterval);
       }
 
@@ -434,7 +415,7 @@
           nextBtn.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
-            nextSlide(true); // true 表示手动操作
+            nextSlide(true);
           });
         }
 
@@ -443,7 +424,7 @@
           if (e.key === 'ArrowLeft') {
             prevSlide();
           } else if (e.key === 'ArrowRight') {
-            nextSlide(true); // true 表示手动操作
+            nextSlide(true);
           }
         });
 
@@ -454,7 +435,7 @@
           landingSection.addEventListener('mouseleave', startAutoPlay);
         }
 
-        // Visibility API - pause when tab is hidden
+        // Visibility API
         document.addEventListener('visibilitychange', function() {
           if (document.hidden) {
             stopAutoPlay();
@@ -466,7 +447,7 @@
 
       // Initialize when DOM is ready
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', init);
       } else {
         init();
       }
