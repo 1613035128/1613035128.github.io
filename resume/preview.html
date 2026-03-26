@@ -6,15 +6,15 @@
   
   <title>昴星团</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="个人简历 | Resume           * {       margin: 0;       padding: 0;       box-sizing: border-box;     }          body {       font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;He">
+  <meta name="description" content="个人简历 | Resume - 预览版           * {       margin: 0;       padding: 0;       box-sizing: border-box;     }          body {       font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Robot">
 <meta property="og:type" content="website">
 <meta property="og:title" content="昴星团">
-<meta property="og:url" content="https://1613035128.github.io/resume/index.html">
+<meta property="og:url" content="https://1613035128.github.io/resume/preview.html">
 <meta property="og:site_name" content="昴星团">
-<meta property="og:description" content="个人简历 | Resume           * {       margin: 0;       padding: 0;       box-sizing: border-box;     }          body {       font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;He">
+<meta property="og:description" content="个人简历 | Resume - 预览版           * {       margin: 0;       padding: 0;       box-sizing: border-box;     }          body {       font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Robot">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-03-26T10:43:14.449Z">
-<meta property="article:modified_time" content="2026-03-26T10:43:14.449Z">
+<meta property="article:published_time" content="2026-03-26T10:37:02.273Z">
+<meta property="article:modified_time" content="2026-03-26T10:37:02.273Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -82,8 +82,8 @@
       <div class="outer">
         <section id="main"><article id="page-" class="h-entry article article-type-page" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
   <div class="article-meta">
-    <a href="/resume/index.html" class="article-date">
-  <time class="dt-published" datetime="2026-03-26T10:43:14.449Z" itemprop="datePublished">2026-03-26</time>
+    <a href="/resume/preview.html" class="article-date">
+  <time class="dt-published" datetime="2026-03-26T10:37:02.273Z" itemprop="datePublished">2026-03-26</time>
 </a>
     
   </div>
@@ -96,7 +96,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <title>个人简历 | Resume</title>
+  <title>个人简历 | Resume - 预览版</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <style>
     * {
@@ -561,9 +561,37 @@
         justify-content: center;
       }
     }
+    
+    /* 预览提示 */
+    .preview-banner {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 12px;
+      font-weight: 600;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      animation: slideIn 0.5s ease-out;
+    }
+    
+    @keyframes slideIn {
+      from {
+        transform: translateX(100px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 <body>
+  <div class="preview-banner">🎨 设计预览版</div>
+  
   <div class="resume-container">
     <div class="resume-card">
       <!-- 头部信息 -->
@@ -599,9 +627,7 @@
           <section class="section">
             <h2 class="section-title">个人简介</h2>
             <p class="summary">
-              我是一名专注于PVP RTS游戏的游戏客户端开发工程师，拥有3年的Unity和UE4/5开发经验（各1.5年）。
-              擅长Gameplay编程、性能优化和服务器开发，曾参与《战争警戒》的完整开发周期。
-              热爱游戏开发，关注渲染管线、系统架构和性能调优，致力于创造流畅、沉浸的游戏体验。
+              专注于PVP RTS游戏的游戏客户端开发工程师，拥有3年的Unity和UE4/5开发经验。擅长Gameplay编程、性能优化和服务器开发。
             </p>
           </section>
 
@@ -628,7 +654,7 @@
           <section class="section">
             <h2 class="section-title">教育背景</h2>
             <div class="experience-item" style="border-left: none; padding-left: 0;">
-              <div class="exp-title">数字媒体技术 - 本科</div>
+              <div class="exp-title">数字媒体技术</div>
               <div class="exp-company">湖南大学</div>
               <div class="exp-date">2019.06 - 2023.07</div>
             </div>
@@ -681,9 +707,7 @@
               <div class="project-name">战争警戒（War Alert）</div>
               <div class="project-tech">UE5 + C++ + 帧同步</div>
               <div class="project-desc">
-                参与PVP RTS游戏《战争警戒》的完整开发周期。负责技能系统、物理破坏系统、
-                单位皮肤系统的开发与维护，参与战斗UI和指令系统开发，负责部分服务器开发工作，
-                并完整跟进项目性能优化工作。
+                参与PVP RTS游戏《战争警戒》的完整开发周期。负责技能系统、物理破坏系统、单位皮肤系统的开发与维护。
               </div>
             </div>
 
@@ -691,17 +715,7 @@
               <div class="project-name">VR应用开发</div>
               <div class="project-tech">Unity + C# + VR SDK</div>
               <div class="project-desc">
-                使用Unity开发VR应用程序，实现完整的任务引导流程系统，开发角色动作模块，
-                使用IK（反向动力学）技术模拟真实肢体动作，提供沉浸式VR体验。
-              </div>
-            </div>
-
-            <div class="project-item">
-              <div class="project-name">个人技术博客</div>
-              <div class="project-tech">Hexo + Node.js + GitHub Actions</div>
-              <div class="project-desc">
-                基于Hexo构建的静态博客系统，记录游戏开发技术心得。集成自动化部署、
-                背景轮播、响应式设计等功能，使用GitHub Actions实现CI/CD自动化工作流。
+                使用Unity开发VR应用程序，实现完整的任务引导流程系统，使用IK技术模拟真实肢体动作。
               </div>
             </div>
           </section>
@@ -723,7 +737,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://1613035128.github.io/resume/index.html" data-id="cuidib0jvwqiJSg2SmY7X65rD" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      <a data-url="https://1613035128.github.io/resume/preview.html" data-id="cuidI55DGKIdsnUKdbYPXM7tR" data-title="" class="article-share-link"><span class="fa fa-share">Share</span></a>
       
       
       
