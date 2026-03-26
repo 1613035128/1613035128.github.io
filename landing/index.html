@@ -61,8 +61,12 @@
       background-repeat: no-repeat;
       opacity: 0;
       transform: translateX(100%);
-      transition: transform 600ms ease-in-out, opacity 600ms ease-in-out;
+      /* 默认无transition，通过JS控制 */
       z-index: 2;
+    }
+    
+    .bg-image.transition {
+      transition: transform 600ms ease-in-out, opacity 600ms ease-in-out;
     }
     
     .bg-image.active {
@@ -433,8 +437,10 @@
         }
         if (!nextBg) nextBg = bgImages[1] || bgImages[0];
 
-        // Reset nextBg position based on direction before showing
-        nextBg.classList.remove('exit-left', 'exit-right', 'active');
+        // Reset nextBg - remove all state classes first
+        nextBg.classList.remove('exit-left', 'exit-right', 'active', 'transition');
+        
+        // Set position without transition (instant)
         if (direction === 'next') {
           nextBg.style.transform = 'translateX(100%)'; // Start from right
         } else {
@@ -446,8 +452,12 @@
           nextBg.style.backgroundImage = 'url(' + backgrounds[index].image + ')';
         }
 
-        // Force reflow to ensure the position is applied
+        // Force reflow to ensure the position is applied instantly
         void nextBg.offsetWidth;
+
+        // Now add transition class to both elements
+        currentBg.classList.add('transition');
+        nextBg.classList.add('transition');
 
         // Apply slide animations based on direction
         if (direction === 'next') {
@@ -474,8 +484,8 @@
         // Clear old image and classes after transition
         setTimeout(function() {
           currentBg.style.backgroundImage = '';
-          currentBg.classList.remove('exit-left', 'exit-right');
-        }, 600);
+          currentBg.classList.remove('exit-left', 'exit-right', 'transition');
+        }, 650);
 
         // Reset transition flag
         setTimeout(function() {
