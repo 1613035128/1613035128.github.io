@@ -60,12 +60,26 @@
       background-position: center;
       background-repeat: no-repeat;
       opacity: 0;
-      transition: opacity 1500ms ease-in-out;
+      transform: translateX(100%);
+      transition: transform 600ms ease-in-out, opacity 600ms ease-in-out;
       z-index: 2;
     }
     
     .bg-image.active {
       opacity: 1;
+      transform: translateX(0);
+      z-index: 2;
+    }
+    
+    .bg-image.exit-left {
+      opacity: 0;
+      transform: translateX(-100%);
+      z-index: 2;
+    }
+    
+    .bg-image.exit-right {
+      opacity: 0;
+      transform: translateX(100%);
       z-index: 2;
     }
     
@@ -93,9 +107,46 @@
       font-weight: 300;
       margin: 0 0 2rem 0;
       opacity: 0.9;
-      animation: fadeInUp 1s ease-out 0.3s both;
       max-width: 600px;
       line-height: 1.6;
+      overflow: hidden;
+      height: 1.6em;
+      position: relative;
+    }
+    
+    .landing-subtitle-text {
+      display: inline-block;
+      transition: transform 600ms ease-in-out, opacity 600ms ease-in-out;
+    }
+    
+    .landing-subtitle-text.slide-in-right {
+      animation: slideInRight 600ms ease-in-out forwards;
+    }
+    
+    .landing-subtitle-text.slide-in-left {
+      animation: slideInLeft 600ms ease-in-out forwards;
+    }
+    
+    @keyframes slideInRight {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 0.9;
+      }
+    }
+    
+    @keyframes slideInLeft {
+      from {
+        transform: translateX(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 0.9;
+      }
     }
     
     .enter-button {
@@ -225,7 +276,7 @@
     </div>
     <div class="landing-content">
       <h1 class="landing-title">昴星团</h1>
-      <p class="landing-subtitle" id="landing-subtitle">Miku</p>
+      <p class="landing-subtitle" id="landing-subtitle"><span class="landing-subtitle-text">Miku</span></p>
       <a href="/archives" class="enter-button">Button</a>
     </div>
     <div class="nav-zones">
@@ -279,7 +330,7 @@
         });
 
         // Update subtitle
-        updateSubtitle();
+        updateSubtitle(null, true);
 
         // Preload next image
         preloadImage(getNextIndex(1));
@@ -301,14 +352,34 @@
         return newIndex;
       }
 
-      function updateSubtitle() {
-        if (subtitleEl && backgrounds[currentIndex]) {
-          subtitleEl.style.opacity = '0';
-          setTimeout(function() {
-            subtitleEl.textContent = backgrounds[currentIndex].subtitle;
-            subtitleEl.style.opacity = '0.9';
-          }, 300);
+      function updateSubtitle(direction, isInitial) {
+        if (!subtitleEl || !backgrounds[currentIndex]) return;
+        
+        var text = backgrounds[currentIndex].subtitle;
+        var span = subtitleEl.querySelector('.landing-subtitle-text');
+        
+        if (isInitial) {
+          span.textContent = text;
+          return;
         }
+        
+        // Remove existing animation classes
+        span.classList.remove('slide-in-right', 'slide-in-left');
+        
+        // Force reflow
+        void span.offsetWidth;
+        
+        // Add appropriate animation class
+        if (direction === 'next') {
+          span.classList.add('slide-in-right');
+        } else {
+          span.classList.add('slide-in-left');
+        }
+        
+        // Update text after a small delay to sync with animation
+        setTimeout(function() {
+          span.textContent = text;
+        }, 50);
       }
 
       function preloadImage(index) {
@@ -318,12 +389,17 @@
         }
       }
 
-      function goToSlide(index, isManual) {
+      function goToSlide(index, isManual, direction) {
         if (isTransitioning || index === currentIndex || backgrounds.length === 0) {
           return;
         }
 
         isTransitioning = true;
+        
+        // Determine direction if not provided
+        if (!direction) {
+          direction = index > currentIndex ? 'next' : 'prev';
+        }
 
         // Find current active element
         var currentBg = null;
@@ -346,28 +422,40 @@
           nextBg.style.backgroundImage = 'url(' + backgrounds[index].image + ')';
         }
 
-        // Pure opacity transition - no z-index changes
-        nextBg.classList.add('active');
-        currentBg.classList.remove('active');
+        // Apply slide animations based on direction
+        if (direction === 'next') {
+          // Next: current slides left, next comes from right
+          currentBg.classList.remove('active');
+          currentBg.classList.add('exit-left');
+          nextBg.classList.remove('exit-left', 'exit-right');
+          nextBg.classList.add('active');
+        } else {
+          // Prev: current slides right, next comes from left
+          currentBg.classList.remove('active');
+          currentBg.classList.add('exit-right');
+          nextBg.classList.remove('exit-left', 'exit-right');
+          nextBg.classList.add('active');
+        }
 
         // Update index
         currentIndex = index;
 
-        // Update subtitle
-        updateSubtitle();
+        // Update subtitle with slide animation
+        updateSubtitle(direction);
 
         // Preload next image
-        preloadImage(getNextIndex(1));
+        preloadImage(getNextIndex(direction === 'next' ? 1 : -1));
 
-        // Clear old image after transition
+        // Clear old image and classes after transition
         setTimeout(function() {
           currentBg.style.backgroundImage = '';
-        }, 1500);
+          currentBg.classList.remove('exit-left', 'exit-right');
+        }, 600);
 
         // Reset transition flag
         setTimeout(function() {
           isTransitioning = false;
-        }, 1600);
+        }, 650);
 
         // Reset autoplay only on manual navigation
         if (isManual) {
@@ -376,11 +464,11 @@
       }
 
       function nextSlide(isManual) {
-        goToSlide(getNextIndex(1), isManual);
+        goToSlide(getNextIndex(1), isManual, 'next');
       }
 
       function prevSlide() {
-        goToSlide(getNextIndex(-1), true);
+        goToSlide(getNextIndex(-1), true, 'prev');
       }
 
       function startAutoPlay() {
