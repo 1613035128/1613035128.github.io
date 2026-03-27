@@ -111,9 +111,11 @@ button::-moz-focus-inner {
   padding: 0;
 }
 html,
-body,
+body {
+  min-height: 100%;
+}
 #container {
-  height: 100%;
+  min-height: 100vh;
 }
 body {
   background: #eee;
@@ -157,11 +159,9 @@ body {
   overflow: hidden;
 }
 #wrap {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: relative;
   -webkit-transition: 0.2s ease-out;
   -moz-transition: 0.2s ease-out;
   -ms-transition: 0.2s ease-out;
